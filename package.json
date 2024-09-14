@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "install": "npm install",
     "start": "node deriv-api.js",
-    "build": "npm install",
+    "build": "npm-run-all install start",
     "dev": "nodemon deriv-api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +15,7 @@
   "description": "",
   "dependencies": {
     "nodemon": "^3.1.4",
+    "npm-run-all": "^4.1.5",
     "ws": "^8.18.0"
   }
 }

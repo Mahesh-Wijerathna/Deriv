@@ -5,7 +5,8 @@
   "main": "deriv-api.js",
   "dependencies": {
     "nodemon": "3.1.4",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "express": "4.21.0"
   },
   "devDependencies": {},
   "scripts": {

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "install": "npm install",
+    "ins": "npm install",
     "start": "node deriv-api.js",
-    "build": "npm-run-all install start",
+    "build": "npm-run-all ins start",
     "dev": "nodemon deriv-api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

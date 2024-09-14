@@ -106,3 +106,16 @@ ws.on('message', (message) => {
 ws.on('error', (error) => {
     console.error("WebSocket Error:", error);
 });
+
+
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send(data)
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})

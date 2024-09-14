@@ -1,18 +1,17 @@
 {
-  "name": "app",
+  "name": "node-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "deriv-api.js",
+  "dependencies": {
+    "nodemon": "3.1.4",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {},
   "scripts": {
-    "start": "node deriv-api.js",
-    "dev": "nodemon deriv-api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "nodemon": "^3.1.4",
-    "ws": "^8.18.0"
-  }
+  "license": "ISC"
 }

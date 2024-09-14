@@ -51,8 +51,7 @@ let start = 0;
 let low = 0;
 let high = 0;
 let signals = false;
-const watching = (currentPrice,epochTime) => { 
-    buy();
+const watching = (currentPrice,epochTime) => {     
     console.log("watching");   
     const date = new Date(epochTime);
     const seconds = date.getSeconds();

@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node deriv-api.js",
+    "build": "npm install",
     "dev": "nodemon deriv-api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

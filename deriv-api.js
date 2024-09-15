@@ -80,9 +80,9 @@ const bearishEngulf = () => {
 
     if (isBearishEngulfing) {
         console.log("Bearish Engulfing Pattern Detected:", currentCandle, previousCandle);
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 };
 
 const buy = () => {
@@ -123,7 +123,8 @@ const watching = (currentPrice, epochTime) => {
         if (seconds === 58) {
             data.push([start, currentPrice, low, high]);
             if (data.length > 2) data.shift();
-            bearishEngulf(); // Call the bearishEngulf function to check for the pattern
+            signals = bearishEngulf(); 
+
         }
     }
 };

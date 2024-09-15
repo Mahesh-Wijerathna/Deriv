@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
 });
 
 server = app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}\nbearish and bullish engulfing pattern`);
 });
 
 let start = 0;

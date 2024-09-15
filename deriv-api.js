@@ -57,6 +57,10 @@ app.get('/close', (req, res) => {
     res.send("WebSocket connection closed");
 });
 
+app.get('/', (req, res) => {
+    res.send({data: data});
+});
+
 server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
@@ -79,7 +83,7 @@ const bearishEngulf = () => {
     );
 
     if (isBearishEngulfing) {
-        console.log("Bearish Engulfing Pattern Detected:", currentCandle, previousCandle);
+        console.log("Bearish Engulfing Pattern Detected:", previousCandle, currentCandle);
         return true;
     }
     return false;

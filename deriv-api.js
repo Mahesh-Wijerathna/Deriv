@@ -83,7 +83,7 @@ const bearishEngulf = () => {
     );
 
     if (isBearishEngulfing) {
-        console.log("Bearish Engulfing Pattern Detected:", currentCandle, previousCandle);
+        console.log("Bearish Engulfing Pattern Detected:", previousCandle, currentCandle);
         return true;
     }
     return false;

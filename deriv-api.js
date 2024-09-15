@@ -2,26 +2,41 @@ const WebSocket = require('ws');
 const express = require('express');
 const app = express();
 const PORT = 4000;
+const apiToken = 'l7LLGTxAT6qn9v9';
 
 let ws;
-let server;
 
 app.get('/start', (req, res) => {
+    if (ws) {
+        res.send("WebSocket connection already started");
+        return; // Stop executing the rest of the code
+    }
     ws = new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
 
+    
     ws.on('open', () => {
-        console.log('WebSocket connection opened');
-        ws.send(JSON.stringify({ ticks: 'R_100' })); // Replace 'R_100' with the appropriate symbol
+        console.log('Trying to authorize');
+        ws.send(JSON.stringify({ authorize: apiToken }));
     });
 
     ws.on('message', (message) => {
         const response = JSON.parse(message);
-        console.log('Received data:', response);
 
-        if (response.tick) {
+        if (response.msg_type === 'tick') {
             const tick = response.tick;
-            watching(tick.quote, tick.epoch); // Call the watching function with the current price and epoch time
+            watching(tick.quote, tick.epoch*1000); // Call the watching function with the current price and epoch time
         }
+        if(response.msg_type === 'authorize') {
+            console.log('Authorization was successful');
+            ws.send(JSON.stringify({ ticks: 'R_100', subscribe: 1 }));
+        }
+        if(response.msg_type === 'buy') {
+            console.log('Buy response:', response);
+        }
+        if(response.msg_type === 'error') {
+            console.error('Error response:', response);
+        }
+
     });
 
     ws.on('error', (error) => {
@@ -46,6 +61,7 @@ server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+let start = 0;
 let low = 0;
 let high = 0;
 let signals = false;
@@ -71,23 +87,34 @@ const bearishEngulf = () => {
 
 const buy = () => {
     const buyParams = {
-        // Your buy parameters here
+        buy: 1,
+        price: 1, // Price to buy
+        parameters: {
+            contract_type: 'ONETOUCH',
+            duration: 2,
+            duration_unit: 'm',
+            symbol: 'R_100',
+            currency: 'USD',
+            basis: 'stake',
+            barrier: '+0.34',
+            amount: 0.5
+        }
     };
-    // Your buy logic here
+
+    ws.send(JSON.stringify(buyParams));
 };
 
 const watching = (currentPrice, epochTime) => {
-    console.log("watching");
+    // console.log("watching");
     const date = new Date(epochTime);
     const seconds = date.getSeconds();
-    console.log(seconds);
-    console.log(data);
 
     if (seconds === 0) {
         if (signals) {
             buy();
-            signals = false;
+            signals = false;            
         }
+        console.log("Time : "+ date.getHours(),date.getMinutes(),seconds ,date.getMilliseconds() + "\nStart " + currentPrice);
         low = high = start = currentPrice;
     } else {
         low = Math.min(low, currentPrice);

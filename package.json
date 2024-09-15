@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "node deriv-api.js",
+    "dev": "nodemon deriv-api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -57,6 +57,10 @@ app.get('/close', (req, res) => {
     res.send("WebSocket connection closed");
 });
 
+app.get('/', (req, res) => {
+    res.send({data: data});
+});
+
 server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

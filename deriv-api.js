@@ -52,7 +52,8 @@ app.get('/start', (req, res) => {
 
 app.get('/close', (req, res) => {
     if (ws) {
-        ws.close();
+        ws.close(); 
+        ws = null;
     }
     res.send("WebSocket connection closed");
 });
@@ -62,13 +63,12 @@ app.get('/', (req, res) => {
 });
 
 server = app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}\nbearish and bullish engulfing pattern`);
 });
 
 let start = 0;
 let low = 0;
 let high = 0;
-let signals = false;
 const data = [];
 
 const bearishEngulf = () => {
@@ -88,8 +88,25 @@ const bearishEngulf = () => {
     }
     return false;
 };
+const bullishEngulf = () => {
+    if (data.length < 2) return 0;
+    
+    const [currentCandle, previousCandle] = [data[data.length - 1], data[data.length - 2]];
 
-const buy = () => {
+    const isBullishEngulfing = (
+        previousCandle[0] > previousCandle[1] && // Previous candle is bearish
+        currentCandle[1] > previousCandle[0] && // Close of current < Open of previous
+        currentCandle[0] < previousCandle[1]    // Open of current > Close of previous
+    );
+
+    if (isBullishEngulfing) {
+        console.log("Bullish Engulfing Pattern Detected:", previousCandle, currentCandle);
+        return true;
+    }
+    return false;
+}
+let BearishSignal = false;
+const BearishTrade = () => {
     const buyParams = {
         buy: 1,
         price: 1, // Price to buy
@@ -107,6 +124,25 @@ const buy = () => {
 
     ws.send(JSON.stringify(buyParams));
 };
+let bullishSignal = false;
+const bullishTrade = () => {
+    const buyParams = {
+        buy: 1,
+        price: 1, // Price to buy
+        parameters: {
+            contract_type: 'ONETOUCH',
+            duration: 2,
+            duration_unit: 'm',
+            symbol: 'R_100',
+            currency: 'USD',
+            basis: 'stake',
+            barrier: '+0.34',
+            amount: 0.5
+        }
+    };
+
+    ws.send(JSON.stringify(buyParams));
+};
 
 const watching = (currentPrice, epochTime) => {
     // console.log("watching");
@@ -114,10 +150,13 @@ const watching = (currentPrice, epochTime) => {
     const seconds = date.getSeconds();
 
     if (seconds === 0) {
-        if (signals) {
-            buy();
-            signals = false;            
+        if (BearishSignal) {
+            BearishTrade();            
         }
+        if (bullishSignal) {
+            bullishTrade();
+        }        
+        signals = false;
         console.log("Time : "+ date.getHours(),date.getMinutes(),seconds ,date.getMilliseconds() + "\nStart " + currentPrice);
         low = high = start = currentPrice;
     } else {
@@ -127,7 +166,8 @@ const watching = (currentPrice, epochTime) => {
         if (seconds === 58) {
             data.push([start, currentPrice, low, high]);
             if (data.length > 2) data.shift();
-            signals = bearishEngulf(); 
+            signals = bearishEngulf();
+            bullishSignal = bullishEngulf(); 
 
         }
     }

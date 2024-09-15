@@ -116,6 +116,6 @@ app.get('/', (req, res) => {
     res.send("hi")
 })
 
-app.listen(port, () => {
+app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`)
 })

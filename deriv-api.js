@@ -96,7 +96,7 @@ const buy = () => {
             symbol: 'R_100',
             currency: 'USD',
             basis: 'stake',
-            barrier: '+0.34',
+            barrier: '-0.34',
             amount: 0.5
         }
     };

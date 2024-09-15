@@ -166,7 +166,7 @@ const watching = (currentPrice, epochTime) => {
         if (seconds === 58) {
             data.push([start, currentPrice, low, high]);
             if (data.length > 2) data.shift();
-            signals = bearishEngulf();
+            BearishSignal = bearishEngulf();
             bullishSignal = bullishEngulf(); 
 
         }

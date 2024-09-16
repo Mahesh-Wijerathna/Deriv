@@ -22,6 +22,10 @@ function startServer  () {
     });
 };
 function stopServer  ()  {
+    if (ws) {
+        ws.close();
+        ws = null;
+    }
     if (server) {
         server.close(() => {
             console.log('Server stopped');
@@ -62,6 +66,7 @@ app.get('/start', (req, res) => {
                     bullishTrade();
                 else if(bearishSignal)
                     BearishTrade();
+                
             }
             else if(date.getSeconds() === 58) {
                 data.push([
@@ -75,12 +80,13 @@ app.get('/start', (req, res) => {
                 bearishSignal = setBearishSignal();
                 logger.info({"bullishSignal": bullishSignal, "bearishSignal": bearishSignal}); 
             }
-            
-            
+            if(data.length > 20) {
+                data.shift();
+            }           
         }
         else if (response.msg_type === 'candles') {
             data.length = 0; 
-            response.candles.forEach(candle => {                
+            response.candles.slice(0,-1).forEach(candle => {                
                 data.push([candle.open, candle.close, candle.low, candle.high]);
             });
             logger.info(response.candles);
@@ -208,8 +214,9 @@ function setBearishSignal  ()  {
         currentCandle[0] > previousCandle[1]    // Open of current > Close of previous
     );
     
-    const last = calculateAverage(data.length - 16, data.length - 2);
-    const previous = calculateAverage(data.length - 15, data.length - 1);
+    const last = calculateAverage(data.length - 15, data.length - 1);
+    const previous = calculateAverage(data.length - 16, data.length - 2);
+    
     logger.info({"last": last, "previous": previous});
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
     if (isBearishEngulfing && last < previous) {
@@ -228,8 +235,8 @@ function setBullishSignal  ()  {
         currentCandle[0] < previousCandle[1]    // Open of current < Close of previous
     );
     
-    const last = calculateAverage(data.length - 16, data.length - 2);
-    const previous = calculateAverage(data.length - 15, data.length - 1);
+    const last = calculateAverage(data.length - 15, data.length - 1);
+    const previous = calculateAverage(data.length - 16, data.length - 2);
     logger.info({"last": last, "previous": previous});
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
     if (isBullishEngulfing && last > previous) {
@@ -241,7 +248,7 @@ function setBullishSignal  ()  {
 
 function calculateAverage  (startIndex, endIndex)  {
     // console.log(startIndex, endIndex, data.length);
-    // logger.info({"startIndex": startIndex, "endIndex": endIndex, "dataLength": data.length});
+    logger.info({"startIndex": startIndex, "endIndex": endIndex, "dataLength": data.length});
     if (startIndex < 0 || endIndex >= data.length || startIndex > endIndex) {
         return 0;
     }
@@ -252,6 +259,7 @@ function calculateAverage  (startIndex, endIndex)  {
         count++;
     }
     // console.log(startIndex, endIndex,count, sum/count);
+    // logger.info({"sum": sum, "count": count});
     // logger.info({"average": sum / count});
     return sum / count;
 };

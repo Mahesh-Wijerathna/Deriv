@@ -44,3 +44,7 @@
 {"level":"warn","timestamp":"2024-09-16T07:03:40.066Z","message":"server started"}
 {"level":"warn","timestamp":"2024-09-16T07:03:45.417Z","message":"server started"}
 {"level":"warn","timestamp":"2024-09-16T07:04:19.785Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T07:04:59.497Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T07:05:09.371Z","message":"Server restarted"}
+{"level":"warn","timestamp":"2024-09-16T07:05:09.378Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T07:05:14.390Z","message":"server stopped"}

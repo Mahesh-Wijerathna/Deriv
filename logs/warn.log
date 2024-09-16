@@ -1,0 +1,35 @@
+{"level":"warn","timestamp":"2024-09-16T06:31:02.803Z","message":"server started "}
+{"level":"warn","timestamp":"2024-09-16T06:40:01.319Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:40:37.888Z","message":"Trying to authorize"}
+{"level":"warn","timestamp":"2024-09-16T06:40:38.383Z","message":"Authorization was successful"}
+{"level":"warn","timestamp":"2024-09-16T06:40:38.386Z","message":"Requesting 20 candles"}
+{"level":"warn","timestamp":"2024-09-16T06:40:38.388Z","message":"Subscribing to 1-minute candles"}
+{"level":"warn","timestamp":"2024-09-16T06:42:10.620Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:42:15.058Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:42:22.752Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:42:28.028Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:42:33.042Z","message":"server stopped"}
+{"level":"warn","timestamp":"2024-09-16T06:43:09.111Z","message":"Trying to authorize"}
+{"level":"warn","timestamp":"2024-09-16T06:43:09.610Z","message":"Authorization was successful"}
+{"level":"warn","timestamp":"2024-09-16T06:43:09.613Z","message":"Requesting 20 candles"}
+{"level":"warn","timestamp":"2024-09-16T06:43:09.616Z","message":"Subscribing to 1-minute candles"}
+{"level":"warn","timestamp":"2024-09-16T06:43:18.915Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:43:23.920Z","message":"server stopped"}
+{"level":"warn","timestamp":"2024-09-16T06:44:19.333Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:44:21.623Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:44:30.690Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:44:35.710Z","message":"server stopped"}
+{"level":"warn","timestamp":"2024-09-16T06:45:27.643Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:35.406Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:38.022Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:39.919Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:41.339Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:44.123Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:46.615Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:49.463Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:51.551Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:55.645Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:56.724Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:45:59.452Z","message":"Server restarted"}
+{"level":"warn","timestamp":"2024-09-16T06:45:59.459Z","message":"server started"}
+{"level":"warn","timestamp":"2024-09-16T06:46:04.476Z","message":"server stopped"}

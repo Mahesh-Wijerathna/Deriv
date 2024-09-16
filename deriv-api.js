@@ -14,9 +14,33 @@ let bearishSignal = false;
 let data = [];
 let server = null;
 
-server = app.listen(PORT, () => {
-    logger.warn(`server started `);
-    console.log(`http://localhost:${PORT}    bearish and bullish engulfing pattern    15 simple moving average`);
+
+const startServer = () => {
+    server = app.listen(PORT, () => {
+        logger.warn(`server started`);
+        console.log(`http://localhost:${PORT}    bearish and bullish engulfing pattern    15 simple moving average`);
+    });
+};
+const stopServer = () => {
+    if (server) {
+        server.close(() => {
+            console.log('Server stopped');
+            logger.warn('server stopped');            
+        });
+    }
+    ws = null;
+    date = null;
+    bullishSignal = false;
+    bearishSignal = false;
+    data = [];
+    server = null;
+};
+app.get('/restart', (req, res) => {
+    stopServer();
+    startServer();
+    logger.warn('Server restarted');
+    console.log('Server restarted');
+    res.send("Server restarted");
 });
 app.get('/start', (req, res) => {
     if (ws) {
@@ -251,3 +275,4 @@ const logger = winston.createLogger({
         new winston.transports.File({ level: 'warn', filename: 'logs/warn.log' }),
     ],
 });
+startServer();

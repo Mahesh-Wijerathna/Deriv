@@ -15,13 +15,13 @@ let data = [];
 let server = null;
 
 
-const startServer = () => {
+function startServer  () {
     server = app.listen(PORT, () => {
         logger.warn(`server started`);
         console.log(`http://localhost:${PORT}    bearish and bullish engulfing pattern    15 simple moving average`);
     });
 };
-const stopServer = () => {
+function stopServer  ()  {
     if (server) {
         server.close(() => {
             console.log('Server stopped');
@@ -160,7 +160,7 @@ app.get('/', (req, res) => {
     res.send({data: data});
 });
 
-const BearishTrade = () => {
+function BearishTrade  () {
     const buyParams = {
         buy: 1,
         price: 1, // Price to buy
@@ -178,7 +178,7 @@ const BearishTrade = () => {
 
     ws.send(JSON.stringify(buyParams));
 };
-const bullishTrade = () => {
+function bullishTrade  ()  {
     const buyParams = {
         buy: 1,
         price: 1, // Price to buy
@@ -197,7 +197,7 @@ const bullishTrade = () => {
     ws.send(JSON.stringify(buyParams));
 };
 
-const setBearishSignal = () => {
+function setBearishSignal  ()  {
     if (data.length < 2) return 0;
     // console.log('bearish');
     const [currentCandle, previousCandle] = [data[data.length - 1], data[data.length - 2]];
@@ -218,7 +218,7 @@ const setBearishSignal = () => {
     }
     return false;
 };
-const setBullishSignal = () => {
+function setBullishSignal  ()  {
     if (data.length < 2) return 0;
     const [currentCandle, previousCandle] = [data[data.length - 1], data[data.length - 2]];
 
@@ -239,7 +239,7 @@ const setBullishSignal = () => {
     return false;
 }
 
-const calculateAverage = (startIndex, endIndex) => {
+function calculateAverage  (startIndex, endIndex)  {
     // console.log(startIndex, endIndex, data.length);
     // logger.info({"startIndex": startIndex, "endIndex": endIndex, "dataLength": data.length});
     if (startIndex < 0 || endIndex >= data.length || startIndex > endIndex) {

@@ -265,8 +265,11 @@ function bullish_5_15_20  ()  {
     logger.info({"previous_5": previous_5, "previous_20": previous_20});
     if(!(previous_5 < previous_20))
         return 0;
-    logger.warn("Bullish 5-15-20 Pattern Detected");
-    return 1;
+    if(current_15 > previous_15 && current_5 > current_20 && previous_5 < previous_20){
+        logger.warn("Bullish 5-15-20 Pattern Detected");
+        return 1;
+    }
+    return 0;
 }
 function bearish_5_15_20  ()  {
     logger.info("Checking bearish_5_15_20");
@@ -285,8 +288,11 @@ function bearish_5_15_20  ()  {
     logger.info({"previous_5": previous_5, "previous_20": previous_20});
     if(!(previous_5 > previous_20))
         return 0;
-    logger.warn("Bearish 5-15-20 Pattern Detected");
-    return 1;
+    if(current_15 < previous_15 && current_5 < current_20 && previous_5 > previous_20){
+        logger.warn("Bearish 5-15-20 Pattern Detected");
+        return 1;
+    }  
+    return 0;
 }
 
 function calculateAverage  (startIndex, endIndex)  {

@@ -1,8 +1,0 @@
-{"level":"warn","timestamp":"2024-09-17T05:55:57.263Z","message":"server started"}
-{"level":"warn","timestamp":"2024-09-17T05:56:24.404Z","message":"Trying to authorize"}
-{"level":"warn","timestamp":"2024-09-17T05:56:24.908Z","message":"Authorization was successful"}
-{"level":"warn","timestamp":"2024-09-17T05:56:24.910Z","message":"Requesting 20 candles"}
-{"level":"warn","timestamp":"2024-09-17T05:56:24.911Z","message":"Subscribing to 1-minute candles"}
-{"level":"warn","timestamp":"2024-09-17T06:00:58.327Z","message":"Bearish 5-15-20 Pattern Detected"}
-{"level":"warn","timestamp":"2024-09-17T06:04:58.266Z","message":"Bearish Engulfing Pattern Detected:"}
-{"level":"warn","timestamp":"2024-09-17T06:09:58.247Z","message":"Bearish Engulfing Pattern Detected:"}

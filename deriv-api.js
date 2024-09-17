@@ -2,6 +2,7 @@ const WebSocket = require('ws');
 const express = require('express');
 const fs = require('fs');
 const winston = require('winston');
+const { log } = require('console');
 const app = express();
 
 const PORT = 4000;
@@ -9,8 +10,8 @@ const apiToken = 'l7LLGTxAT6qn9v9';
 
 let ws = null;
 let date = null;
-let bullishSignal = false;
-let bearishSignal = false;
+let bullishSignal = 0;
+let bearishSignal = 0;
 let data = [];
 let server = null;
 
@@ -18,7 +19,7 @@ let server = null;
 function startServer  () {
     server = app.listen(PORT, () => {
         logger.warn(`server started`);
-        console.log(`http://localhost:${PORT}    bearish and bullish engulfing pattern    15 simple moving average`);
+        console.log(`http://localhost:${PORT}    bearish and bullish engulfing pattern    15 simple moving average 5_15_20`);
     });
 };
 function stopServer  ()  {
@@ -34,8 +35,8 @@ function stopServer  ()  {
     }
     ws = null;
     date = null;
-    bullishSignal = false;
-    bearishSignal = false;
+    bullishSignal = 0;
+    bearishSignal = 0;
     data = [];
     server = null;
 };
@@ -62,9 +63,9 @@ app.get('/start', (req, res) => {
         if (response.msg_type === 'ohlc') {
             date = new Date(response.ohlc.epoch* 1000);
             if(date.getSeconds() === 0) {
-                if(bullishSignal)
+                if(bullishSignal > 0)
                     bullishTrade();
-                else if(bearishSignal)
+                else if(bearishSignal > 0)
                     BearishTrade();
                 
             }
@@ -76,8 +77,9 @@ app.get('/start', (req, res) => {
                     Number(response.ohlc.high)
                 ]);
                 logger.info({candle : {open: response.ohlc.open, close: response.ohlc.close, low: response.ohlc.low, high: response.ohlc.high}});
-                bullishSignal = setBullishSignal();
-                bearishSignal = setBearishSignal();
+                bullishSignal = setBullishSignal() + bullish_5_15_20();
+                bearishSignal = setBearishSignal() + bearish_5_15_20();
+
                 logger.info({"bullishSignal": bullishSignal, "bearishSignal": bearishSignal}); 
             }
             if(data.length > 20) {
@@ -221,9 +223,9 @@ function setBearishSignal  ()  {
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
     if (isBearishEngulfing && last < previous) {
         logger.warn("Bearish Engulfing Pattern Detected:", previousCandle, currentCandle);
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
 };
 function setBullishSignal  ()  {
     if (data.length < 2) return 0;
@@ -241,9 +243,50 @@ function setBullishSignal  ()  {
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
     if (isBullishEngulfing && last > previous) {
         logger.warn("Bullish Engulfing Pattern Detected:", previousCandle, currentCandle);
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
+}
+
+function bullish_5_15_20  ()  {
+    logger.info("Checking bullish_5_15_20");
+    previous_15 = calculateAverage(data.length - 16, data.length - 2);
+    current_15 = calculateAverage(data.length - 15, data.length - 1);
+    logger.info({"previous_15": previous_15, "current_15": current_15});
+    if(!(previous_15 < current_15)) 
+        return 0;
+    current_5 = calculateAverage(data.length - 5, data.length - 1);
+    current_20 = calculateAverage(data.length - 20, data.length - 1);
+    logger.info({"current_5": current_5, "current_20": current_20});
+    if(!(current_5 > current_20))
+        return 0;
+    previous_5 = calculateAverage(data.length - 6, data.length - 2);
+    previous_20 = calculateAverage(data.length - 21, data.length - 2);
+    logger.info({"previous_5": previous_5, "previous_20": previous_20});
+    if(!(previous_5 < previous_20))
+        return 0;
+    logger.warn("Bullish 5-15-20 Pattern Detected");
+    return 1;
+}
+function bearish_5_15_20  ()  {
+    logger.info("Checking bearish_5_15_20");
+    previous_15 = calculateAverage(data.length - 16, data.length - 2);
+    current_15 = calculateAverage(data.length - 15, data.length - 1);
+    logger.info({"previous_15": previous_15, "current_15": current_15});
+    if(!(previous_15 > current_15)) 
+        return 0;
+    current_5 = calculateAverage(data.length - 5, data.length - 1);
+    current_20 = calculateAverage(data.length - 20, data.length - 1);
+    logger.info({"current_5": current_5, "current_20": current_20});
+    if(!(current_5 < current_20))
+        return 0;
+    previous_5 = calculateAverage(data.length - 6, data.length - 2);
+    previous_20 = calculateAverage(data.length - 21, data.length - 2);
+    logger.info({"previous_5": previous_5, "previous_20": previous_20});
+    if(!(previous_5 > previous_20))
+        return 0;
+    logger.warn("Bearish 5-15-20 Pattern Detected");
+    return 1;
 }
 
 function calculateAverage  (startIndex, endIndex)  {

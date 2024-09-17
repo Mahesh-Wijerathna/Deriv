@@ -12,7 +12,7 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "start": "node ai_model/ai.js",
+    "start": "node deriv-api.js",
     "dev": "nodemon deriv-api.js",
     "ai": "nodemon ai_model/ai.js",
     "test": "echo \"Error: no test specified\" && exit 1"

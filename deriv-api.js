@@ -174,12 +174,12 @@ function BearishTrade  () {
         price: 1, // Price to buy
         parameters: {
             contract_type: 'ONETOUCH',
-            duration: 2,
+            duration: 5,
             duration_unit: 'm',
             symbol: 'R_100',
             currency: 'USD',
             basis: 'stake',
-            barrier: '-0.34',
+            barrier: '-0.13',
             amount: 0.5
         }
     };
@@ -192,12 +192,12 @@ function bullishTrade  ()  {
         price: 1, // Price to buy
         parameters: {
             contract_type: 'ONETOUCH',
-            duration: 2,
+            duration: 5,
             duration_unit: 'm',
             symbol: 'R_100',
             currency: 'USD',
             basis: 'stake',
-            barrier: '+0.34',
+            barrier: '+0.13',
             amount: 0.5
         }
     };

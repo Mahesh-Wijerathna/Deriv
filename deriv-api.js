@@ -221,7 +221,8 @@ function setBearishSignal  ()  {
     
     logger.info({"difference: ": last-previous});
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
-    if (isBearishEngulfing && last < previous) {
+    const diff = last-previous;
+    if (isBearishEngulfing && diff <0 ) {
         logger.warn("Bearish Engulfing Pattern Detected:", previousCandle, currentCandle);
         return 1;
     }
@@ -241,7 +242,8 @@ function setBullishSignal  ()  {
     const previous = calculateAverage(data.length - 16, data.length - 2);
     logger.info({"difference: ": last-previous});
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
-    if (isBullishEngulfing && last > previous) {
+    const diff = last-previous;
+    if (isBullishEngulfing && diff > 0) {
         logger.warn("Bullish Engulfing Pattern Detected:", previousCandle, currentCandle);
         return 1;
     }

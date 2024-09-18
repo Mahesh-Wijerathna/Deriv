@@ -179,7 +179,7 @@ function BearishTrade  () {
             symbol: 'R_100',
             currency: 'USD',
             basis: 'stake',
-            barrier: '-0.13',
+            barrier: '-0.5',
             amount: 0.5
         }
     };
@@ -197,7 +197,7 @@ function bullishTrade  ()  {
             symbol: 'R_100',
             currency: 'USD',
             basis: 'stake',
-            barrier: '+0.13',
+            barrier: '+0.5',
             amount: 0.5
         }
     };

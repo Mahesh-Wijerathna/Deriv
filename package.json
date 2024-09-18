@@ -14,6 +14,7 @@
   "scripts": {
     "start": "node deriv-api.js",
     "dev": "nodemon deriv-api.js",
+    "d"  : "nodemon double/double.js",
     "ai": "nodemon ai_model/ai.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

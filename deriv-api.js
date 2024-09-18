@@ -219,7 +219,7 @@ function setBearishSignal  ()  {
     const last = calculateAverage(data.length - 15, data.length - 1);
     const previous = calculateAverage(data.length - 16, data.length - 2);
     
-    logger.info({"last": last, "previous": previous});
+    logger.info({"difference: ": last-previous});
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
     if (isBearishEngulfing && last < previous) {
         logger.warn("Bearish Engulfing Pattern Detected:", previousCandle, currentCandle);
@@ -239,7 +239,7 @@ function setBullishSignal  ()  {
     
     const last = calculateAverage(data.length - 15, data.length - 1);
     const previous = calculateAverage(data.length - 16, data.length - 2);
-    logger.info({"last": last, "previous": previous});
+    logger.info({"difference: ": last-previous});
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
     if (isBullishEngulfing && last > previous) {
         logger.warn("Bullish Engulfing Pattern Detected:", previousCandle, currentCandle);
@@ -249,7 +249,7 @@ function setBullishSignal  ()  {
 }
 
 function bullish_5_15_20  ()  {
-    logger.info("Checking bullish_5_15_20");
+    // logger.info("Checking bullish_5_15_20");
     previous_15 = calculateAverage(data.length - 16, data.length - 2);
     current_15 = calculateAverage(data.length - 15, data.length - 1);
     logger.info({"previous_15": previous_15, "current_15": current_15});
@@ -267,6 +267,7 @@ function bullish_5_15_20  ()  {
         return 0;
     if(current_15 > previous_15 && current_5 > current_20 && previous_5 < previous_20){
         logger.warn("Bullish 5-15-20 Pattern Detected");
+        logger.info({"current_5 - previous_5: ": current_5-previous_5} )
         return 1;
     }
     return 0;
@@ -290,6 +291,7 @@ function bearish_5_15_20  ()  {
         return 0;
     if(current_15 < previous_15 && current_5 < current_20 && previous_5 > previous_20){
         logger.warn("Bearish 5-15-20 Pattern Detected");
+        logger.info({"current_5 - previous_5: ": current_5-previous_5} )
         return 1;
     }  
     return 0;
@@ -297,7 +299,7 @@ function bearish_5_15_20  ()  {
 
 function calculateAverage  (startIndex, endIndex)  {
     // console.log(startIndex, endIndex, data.length);
-    logger.info({"startIndex": startIndex, "endIndex": endIndex, "dataLength": data.length});
+    // logger.info({"startIndex": startIndex, "endIndex": endIndex, "dataLength": data.length});
     if (startIndex < 0 || endIndex >= data.length || startIndex > endIndex) {
         return 0;
     }

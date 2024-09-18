@@ -174,7 +174,7 @@ function BearishTrade  () {
         price: 1, // Price to buy
         parameters: {
             contract_type: 'ONETOUCH',
-            duration: 5,
+            duration: 2,
             duration_unit: 'm',
             symbol: 'R_100',
             currency: 'USD',
@@ -192,7 +192,7 @@ function bullishTrade  ()  {
         price: 1, // Price to buy
         parameters: {
             contract_type: 'ONETOUCH',
-            duration: 5,
+            duration: 2,
             duration_unit: 'm',
             symbol: 'R_100',
             currency: 'USD',

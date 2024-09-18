@@ -222,7 +222,7 @@ function setBearishSignal  ()  {
     logger.info({"difference: ": last-previous});
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
     const diff = last-previous;
-    if (isBearishEngulfing && diff < -0.1 ) {
+    if (isBearishEngulfing && diff < 0 ) {
         logger.warn("Bearish Engulfing Pattern Detected:", previousCandle, currentCandle);
         return 1;
     }
@@ -243,7 +243,7 @@ function setBullishSignal  ()  {
     logger.info({"difference: ": last-previous});
     logger.info({"currentCandle": currentCandle, "previousCandle": previousCandle});
     const diff = last-previous;
-    if (isBullishEngulfing && diff > 0.1) {
+    if (isBullishEngulfing && diff > 0) {
         logger.warn("Bullish Engulfing Pattern Detected:", previousCandle, currentCandle);
         return 1;
     }
@@ -255,8 +255,8 @@ function bullish_5_15_20  ()  {
     previous_15 = calculateAverage(data.length - 16, data.length - 2);
     current_15 = calculateAverage(data.length - 15, data.length - 1);
     logger.info({"previous_15": previous_15, "current_15": current_15});
-    const diff = current_15-previous_15;
-    if(!(current_15 - previous_15 > 0.1)) 
+    
+    if(!(current_15 - previous_15 > 0)) 
         return 0;
     current_5 = calculateAverage(data.length - 5, data.length - 1);
     current_20 = calculateAverage(data.length - 20, data.length - 1);
@@ -280,7 +280,7 @@ function bearish_5_15_20  ()  {
     previous_15 = calculateAverage(data.length - 16, data.length - 2);
     current_15 = calculateAverage(data.length - 15, data.length - 1);
     logger.info({"previous_15": previous_15, "current_15": current_15});
-    if(!(current_15 - previous_15 < -0.1)) 
+    if(!(current_15 - previous_15 < 0)) 
         return 0;
     current_5 = calculateAverage(data.length - 5, data.length - 1);
     current_20 = calculateAverage(data.length - 20, data.length - 1);

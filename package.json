@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "deriv-api.js",
-  "dependencies": {
-    "@tensorflow/tfjs": "^4.21.0",
+  "dependencies": {    
     "express": "^4.21.0",
     "fs": "^0.0.1-security",
     "nodemon": "3.1.4",
@@ -12,10 +11,8 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "start": "node deriv-api.js",
-    "dev": "nodemon deriv-api.js",
-    "d"  : "nodemon double/double.js",
-    "ai": "nodemon ai_model/ai.js",
+    "start": "node differ.js",
+    "dev": "nodemon differ.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

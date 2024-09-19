@@ -2,8 +2,8 @@ const WebSocket = require('ws');
 const express = require('express');
 const fs = require('fs');
 const winston = require('winston');
-const { log } = require('console');
 const app = express();
+
 
 const PORT = 4000;
 const apiToken = 'l7LLGTxAT6qn9v9';

@@ -142,6 +142,9 @@ function watching(){
             logger.warn({'unhandled response':response});
         }
     });
+    if(data.length > 5){
+        data.shift();
+    }
 }
 function openSocket(){
     if(ws != null){

@@ -50,8 +50,8 @@ function checking(){
             logger.warn('contract taken');    
         }
     }
-    else if(data[data.length-0] == data[data.length-1]
-        && data[data.length-1] == data[data.length-2]){
+    else if(data[data.length-1] == data[data.length-2]
+        && data[data.length-2] == data[data.length-3]){
         signal = true;
         data = [-1,-2,-3,-4,-5]; 
         used = 0;
@@ -157,6 +157,7 @@ function openSocket(){
 }
 function startServer  () {  
     clearLogFile();
+    openSocket();
     server = app.listen(PORT, () => {        
         logger.warn(`server started`);  
     });

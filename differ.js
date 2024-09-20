@@ -51,9 +51,9 @@ function takeContract() {
 
 function checking() {
     try {
-        if (used < 3) {
+        if (used < 1) {
             if (data[data.length - 1] == data[data.length - 2]
-            // &&  data[data.length - 2] == data[data.length - 3]
+            &&  data[data.length - 2] == data[data.length - 3]
             ) {
                 takeContract();
                 signal = false;
@@ -63,7 +63,7 @@ function checking() {
             }
         } else if (data[data.length - 1] == data[data.length - 2] 
                 && data[data.length - 2] == data[data.length - 3]
-                // && data[data.length - 3] == data[data.length - 4]
+                && data[data.length - 3] == data[data.length - 4]
             ) {
             
             data = [-1, -2, -3, -4, -5];

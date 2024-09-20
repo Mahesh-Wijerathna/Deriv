@@ -109,7 +109,7 @@ function watching(){
             const tick = response.tick;
             const value = parseInt(parseFloat(tick.quote)*1000);
             data.push(value%10);
-            logger.info({'value':parseFloat(tick.quote),'data':data});            
+            // logger.info({'value':parseFloat(tick.quote),'data':data});            
             checking();
             date = new Date(response.tick.epoch*1000);
         }

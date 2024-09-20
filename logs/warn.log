@@ -1,3 +1,2 @@
-{"level":"warn","timestamp":"2024-09-20T02:34:58.397Z","message":"server started"}
-{"level":"warn","timestamp":"2024-09-20T02:35:15.245Z","message":"Subscribing ticks"}
-{"level":"warn","timestamp":"2024-09-20T02:46:55.760Z","message":"server started"}
+{"level":"error","timestamp":"2024-09-20T03:03:48.736Z","message":"log files cleared"}
+{"level":"warn","timestamp":"2024-09-20T03:03:48.750Z","message":"server started"}

@@ -4,9 +4,6 @@ const fs = require('fs');
 const winston = require('winston');
 const logger = require('./logger.js');
 
-
-
-
 const PORT = 4000;
 const app = express();
 const apiToken = 'l7LLGTxAT6qn9v9';
@@ -19,8 +16,6 @@ let signal = false;
 let data = [];
 let lastWatchedTime = null;
 let socketStatus = 'closed';
-
-
 
 function getWatchTime(){
     if(date)
@@ -84,7 +79,6 @@ function restartServer(){
     logger.warn('server restarting ...');
 }
 function stopServer(){
-    clearLogFile();
     server.close();
 }
 function clearLogFile() {  
@@ -161,9 +155,11 @@ function openSocket(){
         socketStatus = 'just Opened'       
     }
 }
-function startServer  () {          
+function startServer  () {  
+    clearLogFile();
     server = app.listen(PORT, () => {        
         logger.warn(`server started`);  
     });
 };
+
 startServer();

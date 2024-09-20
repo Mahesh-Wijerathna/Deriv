@@ -41,7 +41,7 @@ function takeContract (){
 }
 function checking(){    
     if(signal && used <= 3){
-        if(data[data.length-0] == data[data.length-1])
+        if(data[data.length-1] == data[data.length-2])
         {
             takeContract();   
             signal = false;  

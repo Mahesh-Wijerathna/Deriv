@@ -110,7 +110,7 @@ function watching(){
             const value = parseInt(parseFloat(tick.quote)*1000);
             data.push(value%10);
             checking();
-            logger.info({'value':parseFloat(tick.quote),'last : ':value%10});
+            logger.info({'value':parseFloat(tick.quote),'data':data});
             date = new Date(response.tick.epoch*1000);
         }
         else if(response.msg_type === 'authorize') {

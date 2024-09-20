@@ -51,7 +51,7 @@ function takeContract() {
 
 function checking() {
     try {
-        if (signal && used <= 3) {
+        if (used < 3) {
             if (data[data.length - 1] == data[data.length - 2]
             &&  data[data.length - 2] == data[data.length - 3]
             ) {
@@ -64,7 +64,7 @@ function checking() {
         } else if (data[data.length - 1] == data[data.length - 2] 
                 && data[data.length - 2] == data[data.length - 3]
                 && data[data.length - 3] == data[data.length - 4]) {
-            signal = true;
+            
             data = [-1, -2, -3, -4, -5];
             used = 0;
             logger.warn('Signal detected');

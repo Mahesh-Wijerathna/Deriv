@@ -64,6 +64,9 @@ function checking(){
         used = 0;
         logger.warn('Signal detected');
     }
+    if(data.length > 5){
+        data.shift();
+    }
 
 }
 
@@ -116,6 +119,7 @@ function watching(){
             data.push(value);
             checking();
             logger.info({'value':parseFloat(tick.quote),'last : ':value%10});
+            date = new Date(response.tick.epoch*1000);
         }
         else if(response.msg_type === 'authorize') {
             logger.info('Authorization was successful');
@@ -142,9 +146,7 @@ function watching(){
             logger.warn({'unhandled response':response});
         }
     });
-    if(data.length > 5){
-        data.shift();
-    }
+    
 }
 function openSocket(){
     if(ws != null){

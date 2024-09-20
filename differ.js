@@ -11,8 +11,8 @@ const PORT = 4000;
 const app = express();
 const apiToken = 'l7LLGTxAT6qn9v9';
 
-
-
+let used = 0;
+let max = 3;
 let ws = null;
 let date = null;
 let signal = false;
@@ -45,13 +45,14 @@ function takeContract (){
     }));
 }
 function checking(){    
-    if(signal){
+    if(signal && used <= 3){
         if(data[data.length-0] == data[data.length-1]
         && data[data.length-1] == data[data.length-2])
         {
             takeContract();   
             signal = false;  
-            data = [-1,-2,-3,-4];  
+            data = [-1,-2,-3,-4,-5];  
+            used++;
             logger.warn('contract taken');    
         }
     }
@@ -59,7 +60,8 @@ function checking(){
     && data[data.length-1] == data[data.length-2] 
     && data[data.length-2] == data[data.length-3]){
         signal = true;
-        data = [-1,-2,-3,-4]; 
+        data = [-1,-2,-3,-4,-5]; 
+        used = 0;
         logger.warn('Signal detected');
     }
 
@@ -72,6 +74,7 @@ app.get('/info', (req, res) => { fs.readFile('logs/info.log', 'utf8', (err, data
 app.get('/restart',(req,res)=>{restartServer();res.send({"server Status" : 'restarted' }) });
 app.get('/close',(req,res)=>{closeSocket();res.send({"socket Status" : 'closed' }) });
 app.get('/open',(req,res)=>{openSocket();res.send({"socket Status" : socketStatus }) });
+app.get('/test',(req,res)=>{res.send({'max':max})});
 app.get('/',(req,res)=>{getWatchTime(); res.send({'last time data : ':{'time':lastWatchedTime,'data':data}})});
 // server 
 function restartServer(){

@@ -52,14 +52,18 @@ function takeContract() {
 function checking() {
     try {
         if (signal && used <= 3) {
-            if (data[data.length - 1] == data[data.length - 2]) {
+            if (data[data.length - 1] == data[data.length - 2]
+            &&  data[data.length - 2] == data[data.length - 3]
+            ) {
                 takeContract();
                 signal = false;
                 data = [-1, -2, -3, -4, -5];
                 used++;
                 logger.warn('Contract taken');
             }
-        } else if (data[data.length - 1] == data[data.length - 2] && data[data.length - 2] == data[data.length - 3]) {
+        } else if (data[data.length - 1] == data[data.length - 2] 
+                && data[data.length - 2] == data[data.length - 3]
+                && data[data.length - 3] == data[data.length - 4]) {
             signal = true;
             data = [-1, -2, -3, -4, -5];
             used = 0;

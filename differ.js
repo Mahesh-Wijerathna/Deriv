@@ -114,7 +114,7 @@ function watching(){
         if (response.msg_type === 'tick') {
             const tick = response.tick;
             const value = parseInt(parseFloat(tick.quote)*1000);
-            data.push(value);
+            data.push(value%10);
             checking();
             logger.info({'value':parseFloat(tick.quote),'last : ':value%10});
             date = new Date(response.tick.epoch*1000);

@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 const express = require('express');
 const fs = require('fs');
 const winston = require('winston');
-const logger = require('./logger.js');
+const logger = require('../logger.js');
 
 const PORT = 4000;
 const app = express();

@@ -1,6 +1,6 @@
-{"level":"error","timestamp":"2024-09-28T12:48:21.096Z","message":"Log files cleared"}
-{"level":"warn","timestamp":"2024-09-28T12:48:21.223Z","message":"http://localhost:4000"}
-{"level":"info","timestamp":"2024-09-28T12:48:22.544Z","message":"Trying to authorize"}
-{"level":"warn","timestamp":"2024-09-28T12:48:23.147Z","message":"Authorized"}
-{"level":"warn","timestamp":"2024-09-28T12:48:23.151Z","message":"Requesting 20 candles"}
-{"level":"warn","timestamp":"2024-09-28T12:48:23.154Z","message":"Subscribing to 1-minute candles"}
+{"level":"error","timestamp":"2024-09-28T20:03:16.273Z","message":"Log files cleared"}
+{"level":"warn","timestamp":"2024-09-28T20:03:16.372Z","message":"http://localhost:4000"}
+{"level":"info","timestamp":"2024-09-28T20:03:17.272Z","message":"Trying to authorize"}
+{"level":"warn","timestamp":"2024-09-28T20:03:17.913Z","message":"Authorized"}
+{"level":"warn","timestamp":"2024-09-28T20:03:17.914Z","message":"Requesting 20 candles"}
+{"level":"warn","timestamp":"2024-09-28T20:03:17.915Z","message":"Subscribing to 1-minute candles"}

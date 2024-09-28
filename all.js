@@ -4,6 +4,7 @@ const fs = require('fs');
 const winston = require('winston');
 const logger = require('./logger.js');
 const { simpleMovingAverage, parabolicSAR } = require('./indicators.js');
+const { on } = require('stream');
 
 const PORT = 4000;
 const app = express();
@@ -179,7 +180,7 @@ function authHandler(){
     ws.send(JSON.stringify({
         ticks_history: 'R_10', 
         adjust_start_time: 1,
-        count: 25,
+        count: 50,
         end: 'latest',
         start: 1,
         style: 'candles',
@@ -202,19 +203,18 @@ let psar = 0;
 let trend = 'down';
 let EP = 0;
 let AF = 0.02;
+let onGoing = false;
 function checking() {
     try {
-        
+        console.log('checking');
         if (data.length < 25)
             return;
-        
-
         const psarData = parabolicSAR(trend,psar,EP,AF,data[data.length - 1]);
         psar = psarData[1];
         EP = psarData[2];
         AF = psarData[3];
         trend = psarData[0];  
-
+        console.log('psar: '+psar);
         if (data.length > 25) {
             data.shift();
         }
@@ -224,16 +224,19 @@ function checking() {
 }
 function ohlcHandler(response){
     date = new Date(response.ohlc.epoch* 1000);    
-    if(date.getSeconds() === 59) {
+    if(date.getSeconds() === 58) {
         data.push([
             Number(response.ohlc.open),
             Number(response.ohlc.close),
             Number(response.ohlc.low),
             Number(response.ohlc.high)
         ]);
-        checking(); 
+        checking();
     } 
-    if(trend == 'up' && Number(response.ohlc.low) < psar) {
+    // console.log(response.ohlc.low +'<'+ psar);
+    // console.log(response.ohlc.high +'>'+ psar);
+    if(trend == 'up' && Number(response.ohlc.low) < psar && !onGoing) {
+        console.log(response.ohlc.low +'<'+ psar);
         logger.warn('Bearish Signal');
         ws.send(JSON.stringify({
         buy: 1,
@@ -249,11 +252,14 @@ function ohlcHandler(response){
             currency: 'USD'
         }
         }));
-        trend = 'down';
-
+        onGoing = true;
+        setTimeout(() => {
+            onGoing = false;
+        }, 60000);
         
     }
-    else if(trend == 'down' && Number(response.ohlc.high) > psar) {
+    else if(trend == 'down' && Number(response.ohlc.high) > psar && !onGoing) {
+        
         logger.warn('Bullish Signal');
         ws.send(JSON.stringify({
         buy: 1,
@@ -269,7 +275,11 @@ function ohlcHandler(response){
             currency: 'USD'
         }
         }));
-        trend = 'up';
+
+        onGoing = true;
+        setTimeout(() => {
+            onGoing = false;
+        }, 60000);
     }
     // console.log(trend);
             
@@ -291,7 +301,10 @@ function watching() {
                     psar = psarData[1];
                     EP = psarData[2];
                     AF = psarData[3];
-                    trend = psarData[0];                       
+                    trend = psarData[0]; 
+                    console.log('psar: '+psar); 
+                    console.log('EP: '+EP);
+                    console.log('AF: '+AF);                     
                     
                 });
                 // console.log(psar);

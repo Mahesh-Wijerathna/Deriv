@@ -17,16 +17,18 @@ function simpleMovingAverage(data, period) {
 }
 
 function parabolicSAR(trend, psar, EP, AF, lastCandle) {
-    // Initialize PSAR, Extreme Point (EP), and trend if this is the first time calculation
     if (EP === 0) {
-        psar = lastCandle[3]; // Starting PSAR is the high of the last candle
-        EP = lastCandle[2];   // Starting EP is the low of the last candle
-        trend = 'down';       // Initial trend is down (can also start as 'up' based on your data)
+        console.log('Setting initial EP');
+        console.log(lastCandle);
+        console.log('psar = ' + psar);
+        console.log('EP = ' + EP);
+        psar = lastCandle[3]; 
+        EP = lastCandle[2];   
+        trend = 'down';       
     }
     
-    // When the trend is downward
-    if (trend === 'down') {
-        psar = psar + AF * (EP - psar);  // PSAR calculation for downtrend
+
+    if (trend === 'down') { 
 
         // Ensure PSAR doesn't go above the high of the last candle
         // if (psar > lastCandle[3]) psar = lastCandle[3];
@@ -36,7 +38,9 @@ function parabolicSAR(trend, psar, EP, AF, lastCandle) {
             trend = 'up';
             psar = EP;               // PSAR resets to the extreme point (low)
             EP = lastCandle[3];      // New EP is the high of the current candle
-            AF = 0.02;               // Reset acceleration factor
+            AF = 0.02;             // Reset acceleration factor
+            console.log('Switching to uptrend');
+            console.log('lastCandle = ' + lastCandle);
             
         } else {
             // Continue the downward trend: update EP if there's a new lower low
@@ -46,8 +50,7 @@ function parabolicSAR(trend, psar, EP, AF, lastCandle) {
             }
         }
     }
-    else if (trend === 'up') {
-        psar = psar + AF * (EP - psar);  // PSAR calculation for uptrend
+    else if (trend === 'up') {  // PSAR calculation for uptrend
 
         // Ensure PSAR doesn't go below the low of the last candle
         // if (psar < lastCandle[2]) psar = lastCandle[2];
@@ -57,8 +60,9 @@ function parabolicSAR(trend, psar, EP, AF, lastCandle) {
             trend = 'down';
             psar = EP;               // PSAR resets to the extreme point (high)
             EP = lastCandle[2];      // New EP is the low of the current candle
-            AF = 0.02;               // Reset acceleration factor
-            
+            AF = 0.02;   
+            console.log('Switching to downtrend');  
+            console.log('lastCandle = ' + lastCandle);
         } else {
             // Continue the upward trend: update EP if there's a new higher high
             if (lastCandle[3] > EP) {
@@ -66,7 +70,9 @@ function parabolicSAR(trend, psar, EP, AF, lastCandle) {
                 AF = Math.min(AF + 0.02, 0.2); // Increase AF, max 0.2
             }
         }
+        
     }
+    psar = psar + AF * (EP - psar);  // PSAR calculation for uptrend
 
     return [trend, psar, EP, AF];
 }

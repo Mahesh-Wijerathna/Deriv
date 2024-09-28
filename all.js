@@ -204,69 +204,16 @@ let EP = 0;
 let AF = 0.02;
 function checking() {
     try {
-        // console.log('checking');
-        console.log(data.length);
+        
         if (data.length < 25)
             return;
-        // console.log(25);
-        const sma20 =  simpleMovingAverage(data.map(x => x[1]),20);
-        const sma10 =  simpleMovingAverage(data.map(x => x[1]),10);
-        const sma7  =  simpleMovingAverage(data.map(x => x[1]),7);
-        const sma3  =  simpleMovingAverage(data.map(x => x[1]),3);
+        
 
         const psarData = parabolicSAR(trend,psar,EP,AF,data[data.length - 1]);
         psar = psarData[1];
         EP = psarData[2];
         AF = psarData[3];
-        if(trend != psarData[0]){
-
-            console.log('pattern changed');
-            trend = psarData[0];
-            const sma20_ = (sma20[sma20.length-1]-sma20[sma20.length-2]) - (sma20[sma20.length-2]-sma20[sma20.length-3]);
-            const sma10_ = (sma10[sma10.length-1]-sma10[sma10.length-2]) - (sma10[sma10.length-2]-sma10[sma10.length-3]);
-            const sma7_  = (sma7[sma7.length-1]-sma7[sma7.length-2]) - (sma7[sma7.length-2]-sma7[sma7.length-3]);
-            const sma3_  = (sma3[sma3.length-1]-sma3[sma3.length-2]) - (sma3[sma3.length-2]-sma3[sma3.length-3]);
-            console.log(sma3_, sma7_,sma10_,sma20_);
-            if(trend == 'up'){
-                if(sma20_ > 0 && sma10_ > 0 && sma7_ > 0 && sma3_ > 0){
-                    logger.warn('Bullish Signal');
-                    ws.send(JSON.stringify({
-                    buy: 1,
-                    price: 1,
-                    parameters: {
-                        contract_type: 'ONETOUCH',
-                        symbol: 'R_10',
-                        duration: 5,
-                        duration_unit: 'm',
-                        basis: 'stake',
-                        amount: 0.5,
-                        barrier: `+0.08`,
-                        currency: 'USD'
-                    }
-                    }));
-                }
-            }
-            else{
-                if(sma20_ < 0 && sma10_ < 0 && sma7_ < 0 && sma3_ < 0){
-                    logger.warn('Bearish Signal');
-                    ws.send(JSON.stringify({
-                    buy: 1,
-                    price: 1,
-                    parameters: {
-                        contract_type: 'ONETOUCH',
-                        symbol: 'R_10',
-                        duration: 5,
-                        duration_unit: 'm',
-                        basis: 'stake',
-                        amount: 0.5,
-                        barrier: `-0.08`,
-                        currency: 'USD'
-                    }
-                    }));
-                }
-            }
-            
-        } 
+        trend = psarData[0];  
 
         if (data.length > 25) {
             data.shift();
@@ -277,15 +224,51 @@ function checking() {
 }
 function ohlcHandler(response){
     date = new Date(response.ohlc.epoch* 1000);    
-    if(date.getSeconds() === 58) {
+    if(date.getSeconds() === 59) {
         data.push([
             Number(response.ohlc.open),
             Number(response.ohlc.close),
             Number(response.ohlc.low),
             Number(response.ohlc.high)
         ]);
-        checking();            
+        checking(); 
     } 
+    if(trend == 'up' && Number(response.ohlc.low) < psar) {
+        logger.warn('Bearish Signal');
+        ws.send(JSON.stringify({
+        buy: 1,
+        price: 1,
+        parameters: {
+            contract_type: 'ONETOUCH',
+            symbol: 'R_10',
+            duration: 5,
+            duration_unit: 'm',
+            basis: 'stake',
+            amount: 0.5,
+            barrier: `-0.08`,
+            currency: 'USD'
+        }
+        }));
+        
+    }
+    if(trend == 'down' && Number(response.ohlc.high) > psar) {
+        logger.warn('Bullish Signal');
+        ws.send(JSON.stringify({
+        buy: 1,
+        price: 1,
+        parameters: {
+            contract_type: 'ONETOUCH',
+            symbol: 'R_10',
+            duration: 5,
+            duration_unit: 'm',
+            basis: 'stake',
+            amount: 0.5,
+            barrier: `0.08`,
+            currency: 'USD'
+        }
+        }));
+    }
+            
 }
 function watching() {
     try {

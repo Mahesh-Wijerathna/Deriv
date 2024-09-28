@@ -249,9 +249,11 @@ function ohlcHandler(response){
             currency: 'USD'
         }
         }));
+        trend = 'down';
+
         
     }
-    if(trend == 'down' && Number(response.ohlc.high) > psar) {
+    else if(trend == 'down' && Number(response.ohlc.high) > psar) {
         logger.warn('Bullish Signal');
         ws.send(JSON.stringify({
         buy: 1,
@@ -263,10 +265,11 @@ function ohlcHandler(response){
             duration_unit: 'm',
             basis: 'stake',
             amount: 0.5,
-            barrier: `0.08`,
+            barrier: `+0.08`,
             currency: 'USD'
         }
         }));
+        trend = 'up';
     }
             
 }

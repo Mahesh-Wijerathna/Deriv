@@ -12,8 +12,8 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "start": "node tick.js",
-    "dev": "nodemon tick.js",
+    "start": "node all.js",
+    "dev": "nodemon all.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

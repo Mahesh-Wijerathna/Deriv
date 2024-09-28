@@ -3,7 +3,7 @@ const express = require('express');
 const fs = require('fs').promises;
 const winston = require('winston');
 const { MACD, EMA, SMA, bullish } = require('technicalindicators');
-const logger = require('./logger.js');
+const logger = require('../logger.js');
 
 const PORT = 4000;
 const app = express();
@@ -77,9 +77,13 @@ function checking() {
 
     const histogramDelta = macdOutput[macdOutput.length - 2].histogram - macdOutput[macdOutput.length - 1].histogram;
 
-    if (macdOutput[macdOutput.length - 1].histogram > 0 && macdOutput[macdOutput.length - 2].histogram < 0 && sma[sma.length - 1] - sma[sma.length - 2] >= smaLevel && !isOngoing) {
+    if (macdOutput[macdOutput.length - 1].histogram > 0 && macdOutput[macdOutput.length - 2].histogram < 0 
+        // && sma[sma.length - 1] - sma[sma.length - 2] >= smaLevel 
+        && !isOngoing) {
         bullishSignal = true;
-    } else if (macdOutput[macdOutput.length - 1].histogram < 0 && macdOutput[macdOutput.length - 2].histogram > 0 && sma[sma.length - 2] - sma[sma.length - 1] >= smaLevel && !isOngoing) {
+    } else if (macdOutput[macdOutput.length - 1].histogram < 0 && macdOutput[macdOutput.length - 2].histogram > 0 
+        // && sma[sma.length - 2] - sma[sma.length - 1] >= smaLevel 
+        && !isOngoing) {
         bearishSignal = true;
     }
 

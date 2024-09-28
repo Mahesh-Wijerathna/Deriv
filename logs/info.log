@@ -1,8 +1,6 @@
-{"level":"error","timestamp":"2024-09-28T06:55:30.100Z","message":"Log files cleared"}
-{"level":"warn","timestamp":"2024-09-28T06:55:30.250Z","message":"http://localhost:4000"}
-{"level":"info","timestamp":"2024-09-28T06:55:40.420Z","message":"Trying to authorize"}
-{"level":"warn","timestamp":"2024-09-28T06:55:44.439Z","message":"Authorized"}
-{"level":"warn","timestamp":"2024-09-28T06:55:44.445Z","message":"Requesting 20 candles"}
-{"level":"warn","timestamp":"2024-09-28T06:55:44.449Z","message":"Subscribing to 1-minute candles"}
-{"level":"warn","timestamp":"2024-09-28T07:02:58.472Z","message":"Bearish Signal"}
-{"level":"warn","timestamp":"2024-09-28T07:03:00.190Z","message":{"unhandled response":{"buy":{"balance_after":9999.68,"buy_price":0.5,"contract_id":258048866888,"longcode":"Win payout if Volatility 10 Index touches entry spot minus 0.080 through 5 minutes after contract start time.","payout":0.52,"purchase_time":1727506980,"shortcode":"ONETOUCH_R_10_0.52_1727506980_1727507280_S-80P_0","start_time":1727506980,"transaction_id":514430913848},"echo_req":{"buy":1,"parameters":{"amount":0.5,"app_markup_percentage":"0","barrier":"-0.08","basis":"stake","contract_type":"ONETOUCH","currency":"USD","duration":5,"duration_unit":"m","symbol":"R_10"},"price":1},"msg_type":"buy"}}}
+{"level":"error","timestamp":"2024-09-28T12:48:21.096Z","message":"Log files cleared"}
+{"level":"warn","timestamp":"2024-09-28T12:48:21.223Z","message":"http://localhost:4000"}
+{"level":"info","timestamp":"2024-09-28T12:48:22.544Z","message":"Trying to authorize"}
+{"level":"warn","timestamp":"2024-09-28T12:48:23.147Z","message":"Authorized"}
+{"level":"warn","timestamp":"2024-09-28T12:48:23.151Z","message":"Requesting 20 candles"}
+{"level":"warn","timestamp":"2024-09-28T12:48:23.154Z","message":"Subscribing to 1-minute candles"}

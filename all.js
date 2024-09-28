@@ -271,6 +271,7 @@ function ohlcHandler(response){
         }));
         trend = 'up';
     }
+    // console.log(trend);
             
 }
 function watching() {

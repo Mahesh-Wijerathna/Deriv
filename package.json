@@ -12,9 +12,11 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "start": "node all.js",
+    "start": "node final.js",
+    "fetch": "node fetch-data.js",
     "dev": "nodemon all.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "final":"nodemon final.js",
+    "test": "node fetch-data.js && node test-data.js"
   },
   "keywords": [],
   "author": "",

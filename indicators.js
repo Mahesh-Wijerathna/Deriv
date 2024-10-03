@@ -19,14 +19,12 @@ function simpleMovingAverage(data, period) {
 function parabolicSAR(trend, psar, EP, AF, lastCandle) {
     if (EP === 0) {
         console.log('Setting initial EP');
-        console.log(lastCandle);
         console.log('psar = ' + psar);
         console.log('EP = ' + EP);
-        psar = lastCandle[3]; 
-        EP = lastCandle[2];   
+        psar = lastCandle.high; 
+        EP = lastCandle.low;   
         trend = 'down';       
-    }
-    
+    }    
 
     if (trend === 'down') { 
 

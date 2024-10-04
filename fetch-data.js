@@ -4,7 +4,7 @@ const ws = new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
 
 let lastEpoch = "latest";  // Store the timestamp for the next request
 let totalCandles = 0;      // Track the total number of candles fetched
-const maxCandles = 100 ;  // Stop after 60,000 candles
+const maxCandles = 3000 ;  // Stop after 60,000 candles
 let isFetching = false;    // Prevent simultaneous fetches
 let isFirstBatch = true;   // Flag to handle the first batch's comma separation
 
@@ -58,7 +58,7 @@ function fetchData(endTime) {
         ticks_history: "R_10",
         granularity: 60, // 1-minute candles
         end: endTime,
-        count: 100,    // Fetch up to 10 candles (for testing, adjust as needed)
+        count: 500,    // Fetch up to 10 candles (for testing, adjust as needed)
         style: "candles"
     }));
 }

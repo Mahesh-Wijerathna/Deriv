@@ -234,7 +234,7 @@ function checking() {
         if(type === 'bullish') {
             // console.log(sma_last);
             if(data[data.length - 2].close < data[data.length - 2].open
-                && sma_last[sma_last.length - 1] - sma_last[sma_last.length - 2] > 0.45
+                && sma_last[sma_last.length - 1] - sma_last[sma_last.length - 2] > -0.45
             ) {
                 
                 bullish_signal = true;         
@@ -246,7 +246,7 @@ function checking() {
         }
         else if(type === 'bearish') {
             if(data[data.length - 2].close > data[data.length - 2].open
-                && sma_last[sma_last.length - 2] - sma_last[sma_last.length - 1] > 0.45
+                && sma_last[sma_last.length - 2] - sma_last[sma_last.length - 1] > -0.45
             ) {
                 // console.log('resistance');
                 bearish_signal = true;

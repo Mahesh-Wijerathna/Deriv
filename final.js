@@ -280,6 +280,7 @@ function ohlcHandler(response){
         if(data.length < 25) return;
         checking();
         takeContract();
+        data.shift();
     } 
     
     

@@ -31,12 +31,12 @@ function getWatchTime() {
     }
 }
 
-
+let ongoing = false;
 let bullish_signal = false;
 let bearish_signal = false;
 function takeContract() {
     try {
-        if(bullish_signal) {
+        if(bullish_signal && !ongoing) {
             ws.send(JSON.stringify({
                 buy: 1,
                 price: 1,
@@ -52,7 +52,11 @@ function takeContract() {
                 }
             }));
             logger.error('Bullish signal');
-        } else if(bearish_signal) {
+            ongoing = true;
+            setTimeout(() => {
+                ongoing = false;
+            }, 55 * 1000);
+        } else if(bearish_signal && !ongoing) {
             ws.send(JSON.stringify({
                 buy: 1,
                 price: 1,
@@ -68,6 +72,10 @@ function takeContract() {
                 }
             }));
             logger.error('Bearish signal');
+            ongoing = true;
+            setTimeout(() => {
+                ongoing = false;
+            }, 55 * 1000);
         }
     } catch (err) {
         logger.error('Error in takeContract: ' + err.message);

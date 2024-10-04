@@ -6,7 +6,7 @@ let won_count  = 0;
 let lost_count = 0;
 let data_ = [];
 let signal = null;
-fs.readFile('candles_data.json', 'utf8', (err, data) => {
+fs.readFile('candles_test.json', 'utf8', (err, data) => {
     if (err) throw err;
 
     // Parse the JSON data
@@ -45,12 +45,12 @@ function checkResults (){
     if(contracts.length === 0) return;
     contracts.forEach((contract, index) => {
         if(contract[1] === 'bullish') {
-            if(contract[2] > 3){
+            if(contract[2] > 2){
                 lost_count++;
                 contract[1] = 'lost';
                 contracts.splice(index, 1);
             }
-            else if(data_[data_.length - 1].high - contract[0] > 0.15) {
+            else if(data_[data_.length - 1].high - contract[0] > 0.2) {
                 won_count++;
                 contract[1] = 'won';
                 // console.log(new Date(contract[3] * 1000 - 19800000 ).toLocaleString());
@@ -62,13 +62,13 @@ function checkResults (){
 
         }
         else if(contract[1] === 'bearish') {
-            if(contract[2] > 3){
+            if(contract[2] > 2){
                 lost_count++;
                 contract[1] = 'lost';
                 // console.log('lost' + new Date(contract[3] * 1000 - 19800000 ).toLocaleString());
                 contracts.splice(index, 1);
             }
-            else if(contract[0] - data_[data_.length - 1].low > 0.15) {
+            else if(contract[0] - data_[data_.length - 1].low > 0.2) {
                 won_count++;
                 contract[1] = 'won';
                 contracts.splice(index, 1);
@@ -96,15 +96,16 @@ function calculateTempSupportsAndResistances() {
         type = 'bearish';
     }
     const sma_last = simpleMovingAverage(data_.map(candle => candle.close), 20);
-    const sma_max = 0.2;
+    const sma_max = 0.45;
     if(type === 'bullish') {
         // console.log(sma_last);
         if(data_[data_.length - 2].close < data_[data_.length - 2].open
             && sma_last[sma_last.length - 1] - sma_last[sma_last.length - 2] > sma_max
-            && data_[data_.length - 2].close > data_[data_.length - 1].open && data_[data_.length - 2].open < data_[data_.length - 1].close
+            // && data_[data_.length - 2].close > data_[data_.length - 1].open && data_[data_.length - 2].open < data_[data_.length - 1].close
         ) {
             
-            bullish_signal = true;         
+            bullish_signal = true;  
+            // bearish_signal = false;       
             // const temp_support = Math.min(data_[data_.length - 2].close, data_[data_.length - 1].open);
             // temp_supports.push([temp_support, 0]);
         }
@@ -114,10 +115,11 @@ function calculateTempSupportsAndResistances() {
     else if(type === 'bearish') {
         if(data_[data_.length - 2].close > data_[data_.length - 2].open
             && sma_last[sma_last.length - 2] - sma_last[sma_last.length - 1] > sma_max
-            && data_[data_.length - 2].close < data_[data_.length - 1].open && data_[data_.length - 2].open > data_[data_.length - 1].close
+            // && data_[data_.length - 2].close < data_[data_.length - 1].open && data_[data_.length - 2].open > data_[data_.length - 1].close
         ) {
             // console.log('resistance');
             bearish_signal = true;
+            // bullish_signal = false;
             // const temp_resistance = Math.max(data_[data_.length - 2].close, data_[data_.length - 1].open);
             // temp_resistances.push([temp_resistance, 0]);
         }

@@ -1,2 +1,4 @@
 node_modules
 logs
+candles_data.json
+candles_test.json

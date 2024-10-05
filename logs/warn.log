@@ -1,0 +1,5 @@
+{"level":"error","timestamp":"2024-10-05T16:54:04.204Z","message":"Log files cleared"}
+{"level":"warn","timestamp":"2024-10-05T16:54:04.339Z","message":"http://localhost:4000"}
+{"level":"warn","timestamp":"2024-10-05T16:54:05.836Z","message":"Authorized"}
+{"level":"warn","timestamp":"2024-10-05T16:54:05.840Z","message":"Requesting 20 candles"}
+{"level":"warn","timestamp":"2024-10-05T16:54:05.844Z","message":"Subscribing to 1-minute candles"}

@@ -12,12 +12,12 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "start": "node final.js",
+    "start": "node all.js",
     "fetch": "node fetch-data.js",
     "dev": "nodemon all.js",
-    "t":"node test-data.js",
+    "t":"node test/v_0_0.js",
     "final":"nodemon final.js",
-    "ft": "node fetch-data.js && node test-data.js"
+    "ft": "node fetch-data.js && node test/v_0_0.js"
   },
   "keywords": [],
   "author": "",

@@ -18,6 +18,11 @@ fs.readFile('candles_test.json', 'utf8', (err, data) => {
         total ++;
         data_.push(candle);
         testCandle();
+        if(won_count/lost_count < 5){
+            console.log('Won:', won_count);
+            console.log('Lost:', lost_count);
+            console.log('Total candles:', total);
+        }
         if(data_.length > 25)
             data_.shift();
     });

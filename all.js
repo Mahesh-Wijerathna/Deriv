@@ -10,7 +10,7 @@ const PORT = 4000;
 const app = express();
 const apiToken = 'l7LLGTxAT6qn9v9';
 
-
+let ongoing = false;
 let max = 3;
 let ws = null;
 let date = null;

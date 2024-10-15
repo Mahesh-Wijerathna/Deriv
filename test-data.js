@@ -1,5 +1,7 @@
 const fs = require('fs');
+const RSI = require('technicalindicators').RSI;
 const { simpleMovingAverage, parabolicSAR } = require('./indicators.js');
+const e = require('express');
 
 let total = 0;
 let won_count  = 0;
@@ -18,17 +20,19 @@ fs.readFile('candles_test.json', 'utf8', (err, data) => {
         total ++;
         data_.push(candle);
         testCandle();
-        if(won_count/lost_count < 5){
+        if(won_count/lost_count < 1){
             console.log('Won:', won_count);
             console.log('Lost:', lost_count);
             console.log('Total candles:', total);
         }
-        if(data_.length > 25)
+        if(data_.length > 2)
             data_.shift();
     });
+    
     console.log('Total candles:', total);
     console.log('Won:', won_count);
     console.log('Lost:', lost_count);
+    console.log('won / lost:', won_count/lost_count);
     // console.log('Supports:', temp_supports);
     // console.log('Resistances:', temp_resistances);
     // console.log('candle data:', data_.map(candle => new Date(candle.epoch * 1000).toLocaleString()));
@@ -87,64 +91,37 @@ function checkResults (){
 }
 
 
-
-let temp_supports = [];
-let temp_resistances = [];
-function calculateTempSupportsAndResistances() {
-    let type = null;
-    // console.log();
-    // bullish_signal = false;
-    // bearish_signal = false;
-    if(data_[data_.length - 1].close > data_[data_.length - 1].open) {
-        type = 'bullish';
-    } else {
-        type = 'bearish';
+function checkOverSoldOverBought() {
+    const inputRSI = {
+        values: closePrices,
+        period: 14
+    };
+    // Calculate RSI
+    const rsiValues = RSI.calculate(inputRSI);
+    if(rsiValues[rsiValues.length - 1] > 65) {
+        bearish_signal = true;
     }
-    const sma_last = simpleMovingAverage(data_.map(candle => candle.close), 20);
-    const sma_max = 0.45;
-    if(type === 'bullish') {
-        // console.log(sma_last);
-        if(data_[data_.length - 2].close < data_[data_.length - 2].open
-            && sma_last[sma_last.length - 1] - sma_last[sma_last.length - 2] > sma_max
-            // && data_[data_.length - 2].close > data_[data_.length - 1].open && data_[data_.length - 2].open < data_[data_.length - 1].close
-        ) {
-            
-            bullish_signal = true;  
-            // bearish_signal = false;       
-            // const temp_support = Math.min(data_[data_.length - 2].close, data_[data_.length - 1].open);
-            // temp_supports.push([temp_support, 0]);
-        }
-        else
-            bullish_signal = false;
+    else if(rsiValues[rsiValues.length - 1] < 35) {
+        bullish_signal = true;
     }
-    else if(type === 'bearish') {
-        if(data_[data_.length - 2].close > data_[data_.length - 2].open
-            && sma_last[sma_last.length - 2] - sma_last[sma_last.length - 1] > sma_max
-            // && data_[data_.length - 2].close < data_[data_.length - 1].open && data_[data_.length - 2].open > data_[data_.length - 1].close
-        ) {
-            // console.log('resistance');
-            bearish_signal = true;
-            // bullish_signal = false;
-            // const temp_resistance = Math.max(data_[data_.length - 2].close, data_[data_.length - 1].open);
-            // temp_resistances.push([temp_resistance, 0]);
-        }
-        else
-            bearish_signal = false;
+    else {
+        bearish_signal = false;
+        bullish_signal = false;
     }
 }
 
 
 
 
+
+
+
 function testCandle() {
-    // take contract
-    takeContract();
-
-    // 1. wait for 25 candles
-    if(data_.length < 25) return;
-    // 2. calculate support and resistance
-    calculateTempSupportsAndResistances();
-
+    const size = data_[data_.length - 1].close - data_[data_.length - 1].open;
+    if(-2.31 < size && size < 2.31) {
+        lost_count++;        
+    }
+    else
     
-    checkResults();
+        won_count++;
 }

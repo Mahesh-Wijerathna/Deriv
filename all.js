@@ -33,47 +33,39 @@ function getWatchTime() {
 
 function takeContract() {
     try {
-        if(bullish_signal && !ongoing) {
+        
             ws.send(JSON.stringify({
                 buy: 1,
                 price: 1,
                 parameters: {
-                    contract_type: 'ONETOUCH',
+                    contract_type: 'CALL',
                     symbol: 'R_10',
-                    duration: 2,
+                    duration: 30,
                     duration_unit: 'm',
                     basis: 'stake',
                     amount: 0.5,
-                    barrier: `+0.2`,
+                    barrier: `+2.31`,
                     currency: 'USD'
                 }
             }));
-            logger.error('Bullish signal');
-            ongoing = true;
-            setTimeout(() => {
-                ongoing = false;
-            }, 55 * 1000);
-        } else if(bearish_signal && !ongoing) {
+            
+        
             ws.send(JSON.stringify({
                 buy: 1,
                 price: 1,
                 parameters: {
-                    contract_type: 'ONETOUCH',
+                    contract_type: 'PUT',
                     symbol: 'R_10',
-                    duration: 2,
+                    duration: 30,
                     duration_unit: 'm',
                     basis: 'stake',
                     amount: 0.5,
-                    barrier: `-0.2`,
+                    barrier: `-2.31`,
                     currency: 'USD'
                 }
             }));
-            logger.error('Bearish signal');
-            ongoing = true;
-            setTimeout(() => {
-                ongoing = false;
-            }, 55 * 1000);
-        }
+            
+        
     } catch (err) {
         logger.error('Error in takeContract: ' + err.message);
     }
@@ -204,16 +196,7 @@ function closeSocket() {
 }
 function authHandler(){
     logger.warn('Authorized');
-    ws.send(JSON.stringify({
-        ticks_history: 'R_10', 
-        adjust_start_time: 1,
-        count: 25,
-        end: 'latest',
-        start: 1,
-        style: 'candles',
-        granularity: 60 
-    }));
-    logger.warn('Requesting 20 candles');
+    
     ws.send(JSON.stringify({
         ticks_history: 'R_10',
         adjust_start_time: 1,
@@ -258,12 +241,10 @@ function checking() {
 }
 function ohlcHandler(response){
     date = new Date(response.ohlc.epoch* 1000);    
-    if(date.getSeconds() === 58) {
-        data.push({"close":Number(response.ohlc.close),"epoch":Number(response.ohlc.epoch),"high":Number(response.ohlc.high),"low":Number(response.ohlc.low),"open":Number(response.ohlc.open)});
-        if(data.length < 25) return;
-        checking();
-        takeContract();
-        data.shift();
+    if(date.getSeconds() === 58 ) {
+        if(date.getMinutes() === 29 || date.getMinutes() === 59 )
+            takeContract();
+        
     } 
 }
 function watching() {

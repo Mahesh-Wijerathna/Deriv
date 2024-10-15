@@ -17,7 +17,7 @@
     "dev": "nodemon all.js",
     "t":"node test/v_0_0.js",
     "final":"nodemon final.js",
-    "ft": "node fetch-data.js && node test/v_0_0.js"
+    "ft": "node fetch-data.js && node test-data.js"
   },
   "keywords": [],
   "author": "",

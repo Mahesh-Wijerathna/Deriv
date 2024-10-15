@@ -4,12 +4,12 @@ const ws = new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
 
 let lastEpoch = "latest";  // Store the timestamp for the next request
 let totalCandles = 0;      // Track the total number of candles fetched
-const maxCandles = 1440 ;  // Stop after 60,000 candles
+const maxCandles = 1 ;  // Stop after 60,000 candles
 let isFetching = false;    // Prevent simultaneous fetches
 let isFirstBatch = true;   // Flag to handle the first batch's comma separation
 
 // Create a write stream to store candle data
-const writeStream = fs.createWriteStream('candles_data.json');
+const writeStream = fs.createWriteStream('candles_test.json');
 
 // Initialize the file with an empty array
 writeStream.write('[');
@@ -56,9 +56,9 @@ function fetchData(endTime) {
     // console.log(`Fetching candles up to ${endTime}`);
     ws.send(JSON.stringify({
         ticks_history: "R_10",
-        granularity: 60, // 1-minute candles
+        granularity: 60*30, // 1-day candles
         end: endTime,
-        count: 1440,    // Fetch up to 10 candles (for testing, adjust as needed)
+        count: 1,    // Fetch up to 10 candles (for testing, adjust as needed)
         style: "candles"
     }));
 }
